@@ -30,13 +30,11 @@ accounting.addEventListener("change", checkboxHandler);
 terminal.addEventListener("change", checkboxHandler);
 
 function changeHandler(event){
-    // console.log("testing : changeHandler has been launched");
     const targetId = event.target.id;
     const summaryEquivalent = calcSummary.querySelector(`[data-id=${targetId}]`);
 
     const enteredValue = parseFloat(event.target.value);
     if (enteredValue > 0 && Number.isInteger(enteredValue)) {
-        // console.log("testing: the entered value is > 0")
         //shows the summary element
         summaryEquivalent.classList.add("open");
         //generates a string with calculation
@@ -58,27 +56,22 @@ function calculateTotal(){
     const summaryTotalPrice = summaryTotal.querySelector(".total__price");
     let sumTotal = 0;
     const shownItems = Array.from(calcSummary.querySelectorAll("li.open"));
-    console.log("testing: shownItems are" + shownItems);
     shownItems.forEach(function(el){
         const regex = /(?<=\$)\d+\.?\d*/;
         const elPrice = el.lastElementChild.innerText.match(regex);
         sumTotal += +elPrice;
-        console.log(sumTotal);
     });
     if (sumTotal > 0) {
         summaryTotal.classList.add("open");
         summaryTotalPrice.innerText = "$" + sumTotal;
-        console.log(summaryTotal.classList);
     }
     if (shownItems.length === 0) {
-        console.log("testing: sumTotal is hidden");
         summaryTotal.classList.remove("open");
     }
 }
 
 function clickHandler(event) {
     const selectDropdown = selectPackage.querySelector(".select__dropdown");
-    console.log("clicked");
     selectDropdown.style.margin = "0";
     const computedDisplay = window.getComputedStyle(selectDropdown).getPropertyValue("display");
     if (computedDisplay === "none") {
@@ -89,7 +82,11 @@ function clickHandler(event) {
         selectDropdown.style.display = "none";
         console.log("pierwszy warunek");
     }
-    // if (event.target == ) ******TU SIE ZATRZYMALEM*******
+    if (["Professional", "Basic", "Premium"].includes(event.target.innerText)) {
+        const selectInput = selectPackage.querySelector(".select__input");
+        selectInput.innerText = event.target.innerText;
+        
+    }
 }
 function checkboxHandler(event) {
     const targetId = event.target.id;
@@ -97,12 +94,10 @@ function checkboxHandler(event) {
     const summaryEquivalent = calcSummary.querySelector(`[data-id=${targetId}]`);
     const itemPrice = summaryEquivalent.querySelector(".item__price");
     if (event.target.checked) {
-        console.log("testing: the element has been checked");
         summaryEquivalent.classList.add("open");
         itemPrice.innerText = "$" + prices[targetId];
     }
     if (!event.target.checked) {
-        console.log("testing: the element has been unchecked");
         summaryEquivalent.classList.remove("open");
     }
     calculateTotal();
