@@ -63,15 +63,8 @@ function clickHandler(event) {
     const selectDropdown = selectPackage.querySelector(".select__dropdown");
     selectDropdown.style.margin = "0";
     const computedDisplay = window.getComputedStyle(selectDropdown).getPropertyValue("display");
-    if (computedDisplay === "none") {
-        selectDropdown.style.display = "block";
-        console.log("drugi warunek");
-    }
-    if (computedDisplay === "block") {
-        selectDropdown.style.display = "none";
-        console.log("pierwszy warunek");
-    }
-    console.log(Object.keys(prices.package));
+    if (computedDisplay === "none") selectDropdown.style.display = "block";
+    if (computedDisplay === "block") selectDropdown.style.display = "none";
     if (Object.keys(prices.package).includes(event.target.innerText.toLowerCase())) {
         const packageSelected = event.target.innerText.toLowerCase();
         const selectInput = selectPackage.querySelector(".select__input");
@@ -92,7 +85,6 @@ function clickHandler(event) {
 }
 function checkboxHandler(event) {
     const targetId = event.target.id;
-    console.log(targetId);
     const summaryEquivalent = calcSummary.querySelector(`[data-id=${targetId}]`);
     const itemPrice = summaryEquivalent.querySelector(".item__price");
     if (event.target.checked) {
@@ -103,8 +95,6 @@ function checkboxHandler(event) {
     calculateTotal();
 }
 function blurHandler(event) {
-    console.log(event.target.value);
-    console.log(parseFloat(event.target.value));
     const inputValue = event.target.value;
     if (inputValue.trim() !== "") {
         if (!Number.isInteger(parseFloat(inputValue))) {
@@ -113,7 +103,6 @@ function blurHandler(event) {
             const errorMessage = document.createElement("div");
             errorMessage.classList.add("error");
             errorMessage.innerText = "The number has to be an integer";
-            // errorMessage.style.position = "relative";
             errorMessage.style.height = "1rem";
             errorMessage.style.color = "red";
             errorMessage.style.fontSize = ".65rem";
@@ -122,10 +111,8 @@ function blurHandler(event) {
     }
 }
 function focusHandler(event) {
-    console.log("focusHandler launched");
     const lastChild = event.target.parentNode.lastElementChild;
     if (lastChild.classList.contains("error")) {
-        console.log("error condition");
         event.target.parentNode.removeChild(lastChild);
         event.target.style.borderColor = "#08a6e4";
         event.target.style.marginBottom = "20px";
