@@ -990,6 +990,7 @@ h2 {
 .calc__select .select__input {
   vertical-align: middle;
   cursor: pointer;
+  text-transform: capitalize;
   height: 40px;
   padding: 13px 20px;
   position: relative;

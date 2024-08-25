@@ -71,13 +71,23 @@ function clickHandler(event) {
         selectDropdown.style.display = "none";
         console.log("pierwszy warunek");
     }
-    if ([
-        "Professional",
-        "Basic",
-        "Premium"
-    ].includes(event.target.innerText)) {
+    console.log(Object.keys(prices.package));
+    if (Object.keys(prices.package).includes(event.target.innerText.toLowerCase())) {
+        const packageSelected = event.target.innerText.toLowerCase();
         const selectInput = selectPackage.querySelector(".select__input");
-        selectInput.innerText = event.target.innerText;
+        selectInput.innerText = packageSelected;
+        // modify the summary element
+        const summaryEquivalent = calcSummary.querySelector("[data-id=package]");
+        //generates a string with calculation
+        const itemCalc = summaryEquivalent.querySelector(".item__calc");
+        itemCalc.innerText = packageSelected;
+        //calculates the element s price
+        const itemPrice = summaryEquivalent.querySelector(".item__price");
+        itemPrice.innerText = "$" + prices.package[packageSelected];
+        //shows the summary element
+        summaryEquivalent.classList.add("open");
+        // updates total
+        calculateTotal();
     }
 }
 function checkboxHandler(event) {
